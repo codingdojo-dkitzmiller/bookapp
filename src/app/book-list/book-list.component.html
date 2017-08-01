@@ -1,58 +1,26 @@
-{{diagnostic}}
-<fieldset>
-    <legend>Add a Book</legend>
-    <form #f='ngForm' autocomplete='off' novalidate>
-        <div class='form-group'>
-            <label for='title'>Title</label>
-            <input type='text' class='form-control'
-                   id='title' #title='ngModel' [(ngModel)]='selectedBook.title' name='title' required minlength='3'>
-            <div *ngIf='"ng-invalid" && title.touched && title.dirty && title.errors' class='alert alert-danger'>Required - must have atleast 3 characters</div>
-            <div *ngIf='title.errors && title.errors["minlength"] && title.touched'
-                 class='alert alert-danger'>Title must be at least {{title.errors["minlength"]["requiredLength"]}}
-            </div>
-        </div>
-        <div class='form-group'>
-            <label for='author'>Author</label>
-            <input #author='ngModel' id='author' type='text' class='form-control' [(ngModel)]='selectedBook.author'/>
-        </div>
-        <div class='form-group'>
-            <label for='year'>Year</label>
-            <input #year='ngModel' id='year' type='number' class='form-control' [(ngModel)]='selectedBook.year'/>
-        </div>
-        <div class='form-group'>
-            <label for='pages'>Pages</label>
-            <input #pages='ngModel' id='pages' type='number' class='form-control' [(ngModel)]='selectedBook.pages'/>
-        </div>
-        <div class='form-group'>
-            <label for='publisher'>Publisher</label>
-            <input #year='ngModel' id='publisher' type='text' class='form-control' [(ngModel)]='selectedBook.publisher'/>
-        </div>
-        </div>
-        <button>Submit</button>
-    </form>
-</fieldset>
-
-<table>
-    <thead>
-    <tr>
-        <th>ID</th>
-        <th>Title</th>
-        <th>Year</th>
-        <th>Author</th>
-        <th>Pages</th>
-        <th>Publisher</th>
-        <th>Actions</th>
-    </tr>
-    </thead>
-    <tr *ngFor="let book of getBooks()">
-        <td>{{book.id}}</td>
-        <td>{{book.title}}</td>
-        <td>{{book.year}}</td>
-        <td>{{book.author}}</td>
-        <td>{{book.pages}}</td>
-        <td>{{book.publisher}}</td>
-        <td>
-            <button>Action</button>
-        </td>
-    </tr>
-</table>
+<div>
+    <table class='table'>
+        <thead>
+        <tr class='success'>
+            <th>ID</th>
+            <th>Title</th>
+            <th>Year</th>
+            <th>Author</th>
+            <th>Pages</th>
+            <th>Publisher</th>
+            <th>Actions</th>
+        </tr>
+        </thead>
+        <tr *ngFor="let book of getBooks()">
+            <td>{{book.id}}</td>
+            <td>{{book.title | titleIt: ['the']}}</td>
+            <td>{{book.year}}</td>
+            <td>{{book.author}}</td>
+            <td>{{book.pages}}</td>
+            <td>{{book.publisher}}</td>
+            <td>
+                <button>Action</button>
+            </td>
+        </tr>
+    </table>
+</div>

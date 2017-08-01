@@ -1,44 +1,44 @@
-import {Book} from '../../app/book-list/book';
+import {Book} from '../../app/book/book';
 
 export const SampleBookData: Array<Book> =
     [
         {
             id: 1,
-            title: 'All the Light You Cannot See',
-            author: 'SomeAuthor',
-            publisher: 'Random House',
+            title: 'all the light you cannot see',
+            author: 'some-author',
+            publisher: 'random house',
             year: 2011,
             pages: 100
         },
         {
             id: 2,
-            title: 'Stress Test',
-            author: 'Bernanke',
-            publisher: 'Random House',
+            title: 'stress-test',
+            author: 'ben bernanke',
+            publisher: 'random house',
             year: 2012,
             pages: 200
         },
         {
             id: 3,
-            title: 'Supreme Court Justices',
-            author: 'Jeffery Tubin',
-            publisher: 'Random House',
+            title: 'supreme court justices',
+            author: 'jeffery tubin',
+            publisher: 'random house',
             year: 2013,
             pages: 300
         },
         {
             id: 4,
             title: 'Node For Dummies',
-            author: 'SomeAuthor',
-            publisher: 'Random House',
+            author: 'some-author',
+            publisher: 'random house',
             year: 2014,
             pages: 400
         },
         {
             id: 5,
-            title: 'Angular 4',
-            author: 'SomeAuthor',
-            publisher: 'Random House',
+            title: 'angular 4',
+            author: 'some-author',
+            publisher: 'random house',
             year: 2015,
             pages: 500
         }
