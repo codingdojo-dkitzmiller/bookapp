@@ -1,6 +1,4 @@
 <div class='container'>
     <h2>Books: </h2>
-    <book-list></book-list>
-    <book-form></book-form>
-    <book-submitted></book-submitted>
+    <book-list (editBookEmitter)='editBook($event)'>></book-list>
 </div>

@@ -5,7 +5,9 @@ import {AppComponent} from './app.component';
 import {BookFormModule} from './book-form/book-form.module';
 import {BookListComponent} from './book-list/book-list.component';
 import {BookSharedModule} from './book-shared/book-shared.module';
-import {TitleIt} from './book-shared/book-titelize.pipe';
+import {CapitalizeIt} from './book-shared/capitalizeIt.pipe';
+import { BookSelectedComponent } from './book-selected/book-selected.component';
+import {BookComponent} from './book/book.component';
 
 @NgModule({
     imports: [
@@ -13,8 +15,8 @@ import {TitleIt} from './book-shared/book-titelize.pipe';
         BookFormModule,
         BookSharedModule
     ],
-    declarations: [ AppComponent, BookListComponent ],
-    providers: [TitleIt],
+    declarations: [ AppComponent, BookListComponent, BookComponent, BookSelectedComponent],
+    providers: [CapitalizeIt],
     bootstrap: [AppComponent]
 })
 export class AppModule {

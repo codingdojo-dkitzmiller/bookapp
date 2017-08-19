@@ -4,7 +4,7 @@ import * as _ from 'lodash';
 @Pipe({
     name: 'titleIt'
 })
-export class TitleIt implements PipeTransform {
+export class CapitalizeIt implements PipeTransform {
 
     public static skipWords = ['a', 'is', 'of', 'an', 'then', 'in', 'or', 'the', 'for'];
 
@@ -22,7 +22,7 @@ export class TitleIt implements PipeTransform {
             let newWord = word[0].toUpperCase() + word.substring(1);
             const skippedWords = Array.isArray(processOrAlternateWords)
                 ? processOrAlternateWords
-                : TitleIt.skipWords;
+                : CapitalizeIt.skipWords;
 
             if (processOrAlternateWords) {
                 if (index === 0 || !skippedWords.includes(word)) {

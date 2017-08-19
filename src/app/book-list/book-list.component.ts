@@ -1,7 +1,8 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 import {Book, IBook} from '../book/book';
 import {SampleBookData} from '../../shared/data/bookdata';
-import {TitleIt} from '../book-shared/book-titelize.pipe';
+import {CapitalizeIt} from '../book-shared/capitalizeIt.pipe';
+import {BookFormComponent} from '../book-form/book-form.component';
 
 @Component({
     selector: 'book-list',
@@ -10,11 +11,14 @@ import {TitleIt} from '../book-shared/book-titelize.pipe';
 })
 export class BookListComponent implements OnInit {
 
-    private books: Array<IBook>;
+    books: Array<IBook>;
 
-    newBook: Book = new Book();
+    selectedBook: Book;
 
-    constructor(private titlize: TitleIt) {
+    @Output()
+    editBookEmitter = new EventEmitter<Book>();
+
+    constructor(private capitalizeIt: CapitalizeIt) {
     }
 
     ngOnInit() {
@@ -22,19 +26,53 @@ export class BookListComponent implements OnInit {
         this.capitalizeStringValues();
     }
 
-    private capitalizeStringValues() {
-        this.books.forEach((bk) => {
-            bk.title = this.titlize.transform(bk.title, false);
-            bk.author = this.titlize.transform(bk.author, ['jeffery']);
-            bk.publisher = this.titlize.transform(bk.publisher, ['house']);
-        });
+    public addNewBook($event) {
+        console.log($event);
+        this.books.push($event);
+    }
+
+    onSubmit($event) {
+        console.log(`submit form: ${ JSON.stringify($event)}`);
+    }
+
+    onSelect(book: Book) {
+        this.selectedBook = book === this.selectedBook ? undefined : book;
+        console.log('onSelect');
+    }
+
+    onRemove(book: Book, event: Event) {
+        console.log(`removing book: ${book.title}`);
+        event.stopImmediatePropagation();
+
+        if (this.selectedBook === book) {
+            this.selectedBook = undefined;
+        }
+        this.books.splice(this.books.indexOf(book), 1);
+    }
+
+    onUpdate(book: Book) {
+        console.log(`onUpdate: ${JSON.stringify(book)}`);
+        if (book) {
+            book.action = BookFormComponent.EDIT;
+            this.editBookEmitter.emit(book);
+        }
+    }
+
+    onTdClick(event: Event) {
+        console.log(` onTdClick: ${JSON.stringify(event)}`);
+
     }
 
     public getBooks(): Array<Book> {
         return this.books;
     }
 
-    onSubmit($event) {
-        console.log(`submit form: ${ JSON.stringify($event)}`);
+    private capitalizeStringValues() {
+        this.books.forEach(bk => {
+            bk.title = this.capitalizeIt.transform(bk.title, false);
+            bk.author = this.capitalizeIt.transform(bk.author, ['jeffery']);
+            bk.publisher = this.capitalizeIt.transform(bk.publisher, ['house']);
+        });
     }
+
 }

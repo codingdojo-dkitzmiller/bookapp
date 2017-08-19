@@ -1,7 +1,6 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, EventEmitter, Injector, Input, OnInit, Output} from '@angular/core';
 import {FormGroup, FormBuilder, Validators} from '@angular/forms';
 import {Book} from '../book/book';
-
 
 @Component({
     selector: 'book-form',
@@ -9,8 +8,18 @@ import {Book} from '../book/book';
 })
 export class BookFormComponent implements OnInit {
 
-    book = new Book();
+    static readonly EDIT = 'EDIT';
+    static readonly ADD = 'ADD';
+
+    legend = 'Book Add';
+
+    @Input()
+    book: Book;
+
     submitted = false;
+
+    @Output()
+    newBookEmitter = new EventEmitter<Book>();
 
     // Reset the form with a new book AND restore 'pristine' class state
     // by toggling 'active' flag which causes the form
@@ -55,14 +64,6 @@ export class BookFormComponent implements OnInit {
         }
     };
 
-    addBook() {
-        this.book = new Book();
-        this.buildForm();
-
-        this.active = false;
-        setTimeout(() => this.active = true, 0);
-    }
-
     constructor(private fb: FormBuilder) {
     }
 
@@ -70,11 +71,25 @@ export class BookFormComponent implements OnInit {
         this.buildForm();
     }
 
+    resetForm(): void {
+        this.book = new Book();
+        this.buildForm();
+    }
+
+    editBook(book: Book): void {
+        console.log('book-form: editBook');
+        book.action = BookFormComponent.EDIT;
+        this.book = book;
+        this.submitted = false;
+        this.legend = 'Book Edit';
+        this.buildForm();
+    }
+
     onSubmit() {
         this.submitted = true;
         this.book = this.bookForm.value;
+        this.newBookEmitter.emit(this.bookForm.value);
     }
-
 
     buildForm(): void {
         this.bookForm = this.fb.group({
@@ -128,8 +143,8 @@ export class BookFormComponent implements OnInit {
                 if (control && control.dirty && !control.valid) {
                     const messages = this.validationMessages[field];
                     for (const key in control.errors) {
-                        if ( control.errors.hasOwnProperty(key)) {
-                            this.formErrors[field] +=  messages[key](control);
+                        if (control.errors.hasOwnProperty(key)) {
+                            this.formErrors[field] += messages[key](control);
                         }
                     }
                 }
